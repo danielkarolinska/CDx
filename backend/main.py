@@ -17,6 +17,10 @@ app.add_middleware(
 
 DATA_PATH = os.path.join(os.path.dirname(__file__), '../data/Table_Data.csv')
 
+@app.get("/")
+async def root():
+    return {"message": "CDx Backend API is running", "endpoints": ["/search"]}
+
 # Helper to load table data
 def load_table():
     with open(DATA_PATH, newline='', encoding='utf-8') as csvfile:
