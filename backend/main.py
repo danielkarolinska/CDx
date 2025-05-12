@@ -6,22 +6,13 @@ import os
 
 app = FastAPI()
 
-# Define allowed origins based on environment
-ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Local development
-    "http://127.0.0.1:5173",  # Local development alternative
-    "https://cdx-frontend.onrender.com",  # Render deployment
-    f"https://{os.getenv('GITHUB_REPOSITORY_OWNER')}.github.io"  # GitHub Pages
-] if os.getenv('PRODUCTION') else ["*"]
-
-# Configure CORS
+# Allow frontend to access backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"],
 )
 
 DATA_PATH = os.path.join(os.path.dirname(__file__), '../data/Table_Data.csv')
