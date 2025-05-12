@@ -1,9 +1,6 @@
 import { useState } from 'react'
+import { config, getApiUrl } from './config'
 import './App.css'
-
-const API_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://cdx-backend.onrender.com/search'
-  : 'http://127.0.0.1:8000/search'
 
 function App() {
   const [form, setForm] = useState({
@@ -32,7 +29,10 @@ function App() {
         .filter(([_, v]) => v)
         .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
         .join('&')
-      const res = await fetch(`${API_URL}?${params}`)
+      const res = await fetch(getApiUrl(`search?${params}`))
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`)
+      }
       const data = await res.json()
       if (data.error) {
         setError(data.error)
@@ -41,7 +41,8 @@ function App() {
         setColumns(data.columns || [])
       }
     } catch (err) {
-      setError('Failed to fetch results.')
+      setError(err.message || 'Failed to fetch results.')
+      console.error('Search error:', err)
     } finally {
       setLoading(false)
     }
@@ -50,7 +51,8 @@ function App() {
   return (
     <div className="container">
       <header>
-        <h1>CDx: Companion Diagnostics & Precision Medicine Search</h1>
+        <h1>{config.appTitle}</h1>
+        <div className="version">v{config.version}</div>
       </header>
       <section className="intro-section" style={{background: '#f5f7fa', borderRadius: '8px', padding: '1.5rem', marginBottom: '2rem', boxShadow: '0 2px 8px #e0e0e0'}}>
         <h2 style={{marginTop: 0}}>What are Companion Diagnostics and Precision Medicine?</h2>

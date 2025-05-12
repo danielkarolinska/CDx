@@ -5,6 +5,17 @@
   text-align: center;
 }
 
+header {
+  margin-bottom: 2rem;
+}
+
+.version {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
