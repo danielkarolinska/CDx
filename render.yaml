@@ -12,11 +12,13 @@ services:
         name: Access-Control-Allow-Origin
         value: https://cdx-frontend.onrender.com
 
-  - type: web
+  - type: static
     name: cdx-frontend
-    env: static
     buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: frontend/dist
+    publishDirectory: frontend/dist
+    envVars:
+      - key: NODE_VERSION
+        value: 18.19.0
     headers:
       - path: /*
         name: Cache-Control
