@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import './App.css'
 
-const API_URL = 'http://127.0.0.1:8000/search'
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://cdx-backend.onrender.com/search'
+  : 'http://127.0.0.1:8000/search'
 
 function App() {
   const [form, setForm] = useState({
