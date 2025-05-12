@@ -25,7 +25,7 @@ services:
 
   - type: static
     name: cdx-frontend
-    buildCommand: cd frontend && npm install && npm run build
+    buildCommand: cd frontend && npm ci && npm run build
     publishDirectory: frontend/dist
     envVars:
       - key: NODE_VERSION
@@ -34,6 +34,8 @@ services:
         value: production
       - key: VITE_API_URL
         value: https://cdx-backend.onrender.com
+      - key: CI
+        value: true
     headers:
       - path: /*
         name: Cache-Control
