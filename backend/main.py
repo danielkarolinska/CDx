@@ -54,6 +54,10 @@ def search(
     """
     Search the table by any combination of fields. Case-insensitive, partial match.
     Returns results as a list of dicts and a 'columns' list for easy table rendering.
+    
+    IMPORTANT: This function returns ALL matching results without any deduplication.
+    Different therapies (e.g., ROZLYTREK and VITRAKVI) for the same gene mutation, test,
+    and tumor type will all be included in the results as separate rows.
     """
     table = load_table()
     results = []
