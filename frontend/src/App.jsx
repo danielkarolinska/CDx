@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import './App.css'
 
+// Use localhost instead of 127.0.0.1 for better compatibility
 const API_URL = process.env.NODE_ENV === 'production' 
   ? 'https://cdx-backend.onrender.com/search'
-  : 'http://127.0.0.1:8000/search'
+  : 'http://localhost:8000/search'
 
 function App() {
   const [form, setForm] = useState({
@@ -32,8 +33,24 @@ function App() {
         .filter(([_, v]) => v)
         .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
         .join('&')
-      const res = await fetch(`${API_URL}?${params}`)
+      
+      console.log(`Fetching from: ${API_URL}?${params}`)
+      
+      const res = await fetch(`${API_URL}?${params}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        },
+        mode: 'cors',
+      })
+      
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`)
+      }
+      
       const data = await res.json()
+      console.log('API response:', data)
+      
       if (data.error) {
         setError(data.error)
       } else {
@@ -41,7 +58,8 @@ function App() {
         setColumns(data.columns || [])
       }
     } catch (err) {
-      setError('Failed to fetch results.')
+      console.error('Fetch error:', err)
+      setError(`Failed to fetch results. ${err.message || ''}`)
     } finally {
       setLoading(false)
     }
@@ -52,8 +70,8 @@ function App() {
       <header>
         <h1>CDx: Companion Diagnostics & Precision Medicine Search</h1>
       </header>
-      <section className="intro-section" style={{background: '#f5f7fa', borderRadius: '8px', padding: '1.5rem', marginBottom: '2rem', boxShadow: '0 2px 8px #e0e0e0'}}>
-        <h2 style={{marginTop: 0}}>What are Companion Diagnostics and Precision Medicine?</h2>
+      <section className="intro-section">
+        <h2>What are Companion Diagnostics and Precision Medicine?</h2>
         <p>
           <b>Companion diagnostics</b> are laboratory tests designed to identify patients who are most likely to benefit from a specific drug or therapy, or who may be at increased risk for serious side effects. These tests analyze genetic, protein, or other biomarkers to guide treatment decisions.
         </p>
