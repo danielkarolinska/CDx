@@ -11,8 +11,7 @@ Colorectal cancer,FoundationOne CDx,KRAS wild-type (absence of mutations in codo
 Colorectal cancer,FoundationOne CDx,"KRAS wild-type (absence of mutations in exons 2, 3, and 4) and NRAS wild-type (absence of mutations in exons 2, 3, and 4)",VECTIBIX® (panitumumab)
 Melanoma,FoundationOne CDx,BRAF V600 mutation-positive,TECENTRIQ® (atezolizumab) in combination with COTELLIC® (cobimetinib) and ZELBORAF® (vemurafenib)
 Melanoma,FoundationOne CDx,BRAF V600E,BRAF Inhibitor Approved by FDA*
-Melanoma,FoundationOne CDx,BRAF V600E and V600K,BRAF/MEK Inhibitor Combinations Approved by FDA*
-Melanoma,FoundationOne CDx,,MEKINIST® (trametinib)
+Melanoma,FoundationOne CDx,BRAF V600E and V600K,BRAF/MEK Inhibitor Combinations Approved by FDA* or MEKINIST® (trametinib)
 Non-small cell lung cancer (NSCLC),FoundationOne CDx,ALK rearrangements,ALECENSA® (alectinib)
 Non-small cell lung cancer (NSCLC),FoundationOne CDx,ALK rearrangements,ALUNBRIG® (brigatinib)
 Non-small cell lung cancer (NSCLC),FoundationOne CDx,ALK rearrangements,XALKORI® (crizotinib)
@@ -28,17 +27,15 @@ Prostate cancer,FoundationOne CDx,"BRCA1, BRCA2 alterations",AKEEGA® (niraparib
 Prostate cancer,FoundationOne CDx,"BRCA1, BRCA2 alterations",LYNPARZA® (olaparib) in combination with abiraterone
 Prostate cancer,FoundationOne CDx,"Homologous Recombination Repair (HRR) gene (BRCA1, BRCA2, ATM, BARD1, BRIP1, CDK12, CHEK1, CHEK2, FANCL, PALB2, RAD51B, RAD51C, RAD51D and RAD54L) alterations",LYNPARZA® (olaparib)
 Solid tumors,FoundationOne CDx,MSI-High,KEYTRUDA® (pembrolizumab)
-Solid tumors,FoundationOne CDx,NTRK1/2/3 fusions,ROZLYTREK® (entrectinib)
-Solid tumors,FoundationOne CDx,,VITRAKVI® (larotrectinib)
+Solid tumors,FoundationOne CDx,NTRK1/2/3 fusions,ROZLYTREK® (entrectinib) or VITRAKVI® (larotrectinib)
 Solid tumors,FoundationOne CDx,RET fusions,RETEVMO® (selpercatinib)
 Solid tumors,FoundationOne CDx,TMB ≥ 10 mutations per megabase,KEYTRUDA® (pembrolizumab)
 Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,ALK rearrangements,ALECENSA® (alectinib)
 Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,BRAF V600E ,BRAFTOVI® (encorafenib) in combination with MEKTOVI® (binimetinib)
-Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,EGFR exon 19 deletions and,EGFR tyrosine kinase inhibitors approved by FDA*
-Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,EGFR exon 21 L858R substitution,
-Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,EGFR exon 20 insertions ,EXKIVITY® (mobocertinib)
-Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,MET single nucleotide variants (SNVs) and indels that lead to MET exon 14 skipping,TABRECTA® (capmatinib)
-Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,,Tepmetko (tepotinib)
+Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,EGFR exon 19 deletions,EGFR tyrosine kinase inhibitors approved by FDA*
+Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,EGFR exon 21 L858R substitution,EGFR tyrosine kinase inhibitors approved by FDA*
+Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,EGFR exon 20 insertions,EXKIVITY® (mobocertinib)
+Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,MET single nucleotide variants (SNVs) and indels that lead to MET exon 14 skipping,TABRECTA® (capmatinib) or Tepmetko (tepotinib)
 Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,ROS1 fusions,ROZLYTREK® (entrectinib)
 Prostate cancer,FoundationOne Liquid CDx,"BRCA1, BRCA2, ATM alterations",LYNPARZA® (olaparib)
 Prostate cancer,FoundationOne Liquid CDx,"BRCA1, BRCA2 alterations",RUBRACA® (rucaparib)
