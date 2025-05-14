@@ -2,7 +2,7 @@ services:
   - type: web
     name: cdx-api-backend
     env: python
-    buildCommand: pip install -r backend/requirements.txt && mkdir -p backend/data && cp -r data/* backend/data/
+    buildCommand: pip install --upgrade pip && pip install -r backend/requirements.txt && mkdir -p backend/data && cp -r data/* backend/data/
     startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT --root-path /
     envVars:
       - key: PYTHON_VERSION
