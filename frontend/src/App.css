@@ -156,3 +156,23 @@ tr:nth-child(even) {
     flex-direction: column;
   }
 }
+
+.search-instructions {
+  margin-bottom: 15px;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+  border-left: 4px solid #0056b3;
+}
+
+.search-instructions p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.results-info {
+  margin: 10px 0;
+  font-weight: bold;
+  color: #28a745;
+}

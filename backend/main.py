@@ -87,8 +87,8 @@ def search(
 ):
     """
     Search the table by any combination of fields. Case-insensitive, partial match.
-    Uses a very simple matching rule - if the search term appears anywhere in the field, 
-    the row is included in the results. ALL matching rows are returned.
+    Rule: If any search term matches any part of any cell, return the row.
+    All matching rows are returned without deduplication.
     """
     table = load_table()
     
@@ -97,44 +97,75 @@ def search(
         return table
         
     results = []
+    
     # Simple function to check if a field matches the search term
     def matches(field_value, search_term):
         if not search_term:
-            return True
+            return False  # Empty search terms don't count as matches
         if not field_value:
             return False
-        # Simple case insensitive check - if search term is anywhere in the field value, it's a match
+        # Simple case insensitive check
         return search_term.lower() in field_value.lower()
     
-    # Go through each row and check for matches
-    for row in table:
-        # Skip rows missing expected columns
-        if not all(key in row for key in ['Tumor Type', 'Test', 'Gene mutations', 'Therapy']):
-            continue
+    # If no search terms provided, return all rows
+    has_search_terms = any([tumor_type, test, gene_mutations, therapy, drug_company, fda_year])
+    if not has_search_terms:
+        results = table
+    else:
+        # Go through each row
+        for row in table:
+            # Skip rows missing expected columns
+            if not all(key in row for key in ['Tumor Type', 'Test', 'Gene mutations', 'Therapy']):
+                continue
+                
+            # Check if ANY search term matches ANY field (not just respective fields)
+            found_match = False
             
-        # Check each field
-        tumor_match = matches(row['Tumor Type'], tumor_type)
-        test_match = matches(row['Test'], test)
-        gene_match = matches(row['Gene mutations'], gene_mutations)
-        therapy_match = matches(row['Therapy'], therapy)
-        
-        # Check new columns if they exist
-        drug_company_match = True
-        if drug_company and 'Drug Company' in row:
-            drug_company_match = matches(row['Drug Company'], drug_company)
+            # For each search term, check if it matches any field in the row
+            if tumor_type:
+                for field_name, field_value in row.items():
+                    if matches(field_value, tumor_type):
+                        found_match = True
+                        break
+                        
+            if test and not found_match:
+                for field_name, field_value in row.items():
+                    if matches(field_value, test):
+                        found_match = True
+                        break
+                        
+            if gene_mutations and not found_match:
+                for field_name, field_value in row.items():
+                    if matches(field_value, gene_mutations):
+                        found_match = True
+                        break
+                        
+            if therapy and not found_match:
+                for field_name, field_value in row.items():
+                    if matches(field_value, therapy):
+                        found_match = True
+                        break
+                        
+            if drug_company and not found_match:
+                for field_name, field_value in row.items():
+                    if matches(field_value, drug_company):
+                        found_match = True
+                        break
+                        
+            if fda_year and not found_match:
+                for field_name, field_value in row.items():
+                    if matches(field_value, fda_year):
+                        found_match = True
+                        break
             
-        fda_year_match = True
-        if fda_year and 'FDA Approved Year' in row:
-            fda_year_match = matches(row['FDA Approved Year'], fda_year)
-        
-        # If all specified fields match, include this row
-        if tumor_match and test_match and gene_match and therapy_match and drug_company_match and fda_year_match:
-            results.append(row)
+            # If any match found, include this row
+            if found_match:
+                results.append(row)
     
     # Define columns for table rendering (in order) - including new columns
     columns = ['Tumor Type', 'Test', 'Gene mutations', 'Therapy']
     
-    # Check if the new columns exist in the first result
+    # Check if the new columns exist in the results
     if results and 'Drug Company' in results[0]:
         columns.append('Drug Company')
     if results and 'FDA Approved Year' in results[0]:
@@ -151,7 +182,8 @@ def search(
             "fda_year": fda_year
         },
         "matched_rows": len(results),
-        "total_rows": len(table) if isinstance(table, list) else 0
+        "total_rows": len(table) if isinstance(table, list) else 0,
+        "search_rule": "Match any search term against any field content"
     }
     
     return {
