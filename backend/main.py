@@ -76,29 +76,6 @@ def load_table():
     except Exception as e:
         return {"error": f"Error loading data: {str(e)}"}
 
-def text_contains(haystack, needle):
-    """
-    Enhanced search function that handles special cases for gene mutations
-    and ensures partial matching works correctly.
-    """
-    if not needle or not haystack:
-        return True
-    
-    # Convert both to lowercase for case-insensitive comparison
-    haystack_lower = haystack.lower()
-    needle_lower = needle.lower()
-    
-    # Direct substring check
-    if needle_lower in haystack_lower:
-        return True
-    
-    # Special handling for gene mutations like NTRK vs NTRK1/2/3
-    # Check if needle is a gene name prefix in gene mutation strings
-    if re.search(r'\b' + re.escape(needle_lower) + r'[0-9/]*\b', haystack_lower):
-        return True
-    
-    return False
-
 @app.get("/search")
 def search(
     tumor_type: Optional[str] = Query(None),
@@ -108,11 +85,8 @@ def search(
 ):
     """
     Search the table by any combination of fields. Case-insensitive, partial match.
-    Returns results as a list of dicts and a 'columns' list for easy table rendering.
-    
-    IMPORTANT: This function returns ALL matching results without any deduplication.
-    Different therapies (e.g., ROZLYTREK and VITRAKVI) for the same gene mutation, test,
-    and tumor type will all be included in the results as separate rows.
+    Uses a very simple matching rule - if the search term appears anywhere in the field, 
+    the row is included in the results. ALL matching rows are returned.
     """
     table = load_table()
     
@@ -121,37 +95,49 @@ def search(
         return table
         
     results = []
+    # Simple function to check if a field matches the search term
+    def matches(field_value, search_term):
+        if not search_term:
+            return True
+        if not field_value:
+            return False
+        # Simple case insensitive check - if search term is anywhere in the field value, it's a match
+        return search_term.lower() in field_value.lower()
+    
+    # Go through each row and check for matches
     for row in table:
         # Skip rows missing expected columns
-        if not all(k in row for k in ['Tumor Type', 'Test', 'Gene mutations', 'Therapy']):
+        if not all(key in row for key in ['Tumor Type', 'Test', 'Gene mutations', 'Therapy']):
             continue
-        try:
-            # Use the enhanced text_contains function for better matching
-            if tumor_type and not text_contains(row['Tumor Type'], tumor_type):
-                continue
-            if test and not text_contains(row['Test'], test):
-                continue
-            if gene_mutations and not text_contains(row['Gene mutations'], gene_mutations):
-                continue
-            if therapy and not text_contains(row['Therapy'], therapy):
-                continue
+            
+        # Check each field
+        tumor_match = matches(row['Tumor Type'], tumor_type)
+        test_match = matches(row['Test'], test)
+        gene_match = matches(row['Gene mutations'], gene_mutations)
+        therapy_match = matches(row['Therapy'], therapy)
+        
+        # If all specified fields match, include this row
+        if tumor_match and test_match and gene_match and therapy_match:
             results.append(row)
-        except KeyError as e:
-            return {"error": f"Missing expected column: {e}"}
     
     # Define columns for table rendering (in order)
     columns = ['Tumor Type', 'Test', 'Gene mutations', 'Therapy']
     
-    # Diagnostic information for specific searches
-    diagnostic_info = {}
-    if gene_mutations in ["NTRK", "ALK"]:
-        diagnostic_info["search_term"] = gene_mutations
-        diagnostic_info["matching_rows"] = len(results)
-        diagnostic_info["expected_minimum"] = 3 if gene_mutations == "NTRK" else 5
+    # Return results with diagnostic info
+    search_info = {
+        "search_terms": {
+            "tumor_type": tumor_type,
+            "test": test, 
+            "gene_mutations": gene_mutations,
+            "therapy": therapy
+        },
+        "matched_rows": len(results),
+        "total_rows": len(table) if isinstance(table, list) else 0
+    }
     
     return {
         "columns": columns, 
         "results": results,
         "total_matches": len(results),
-        "diagnostic_info": diagnostic_info if diagnostic_info else None
+        "search_info": search_info
     }
