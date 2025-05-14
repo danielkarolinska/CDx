@@ -3,7 +3,7 @@ import './App.css'
 
 // Use localhost instead of 127.0.0.1 for better compatibility
 const API_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://cdx-backend.onrender.com/search'
+  ? 'https://cdx-api-backend.onrender.com/search'
   : 'http://localhost:8000/search'
 
 function App() {
