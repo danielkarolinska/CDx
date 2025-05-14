@@ -12,6 +12,8 @@ function App() {
     test: '',
     gene_mutations: '',
     therapy: '',
+    drug_company: '',
+    fda_year: ''
   })
   const [results, setResults] = useState([])
   const [columns, setColumns] = useState([])
@@ -109,6 +111,22 @@ function App() {
             name="therapy"
             placeholder="Therapy"
             value={form.therapy}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-row">
+          <input
+            type="text"
+            name="drug_company"
+            placeholder="Drug Company"
+            value={form.drug_company}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="fda_year"
+            placeholder="FDA Approval Year"
+            value={form.fda_year}
             onChange={handleChange}
           />
         </div>

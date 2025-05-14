@@ -82,6 +82,8 @@ def search(
     test: Optional[str] = Query(None),
     gene_mutations: Optional[str] = Query(None),
     therapy: Optional[str] = Query(None),
+    drug_company: Optional[str] = Query(None),
+    fda_year: Optional[str] = Query(None),
 ):
     """
     Search the table by any combination of fields. Case-insensitive, partial match.
@@ -116,12 +118,27 @@ def search(
         gene_match = matches(row['Gene mutations'], gene_mutations)
         therapy_match = matches(row['Therapy'], therapy)
         
+        # Check new columns if they exist
+        drug_company_match = True
+        if drug_company and 'Drug Company' in row:
+            drug_company_match = matches(row['Drug Company'], drug_company)
+            
+        fda_year_match = True
+        if fda_year and 'FDA Approved Year' in row:
+            fda_year_match = matches(row['FDA Approved Year'], fda_year)
+        
         # If all specified fields match, include this row
-        if tumor_match and test_match and gene_match and therapy_match:
+        if tumor_match and test_match and gene_match and therapy_match and drug_company_match and fda_year_match:
             results.append(row)
     
-    # Define columns for table rendering (in order)
+    # Define columns for table rendering (in order) - including new columns
     columns = ['Tumor Type', 'Test', 'Gene mutations', 'Therapy']
+    
+    # Check if the new columns exist in the first result
+    if results and 'Drug Company' in results[0]:
+        columns.append('Drug Company')
+    if results and 'FDA Approved Year' in results[0]:
+        columns.append('FDA Approved Year')
     
     # Return results with diagnostic info
     search_info = {
@@ -129,7 +146,9 @@ def search(
             "tumor_type": tumor_type,
             "test": test, 
             "gene_mutations": gene_mutations,
-            "therapy": therapy
+            "therapy": therapy,
+            "drug_company": drug_company,
+            "fda_year": fda_year
         },
         "matched_rows": len(results),
         "total_rows": len(table) if isinstance(table, list) else 0
