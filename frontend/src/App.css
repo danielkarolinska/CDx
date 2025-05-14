@@ -225,12 +225,53 @@ th {
   letter-spacing: 0.5px;
 }
 
+td {
+  color: #1a202c;
+  font-size: 0.95rem;
+}
+
+tr {
+  background-color: white;
+}
+
 tr:nth-child(even) {
-  background-color: #f8fafc;
+  background-color: #edf2f7;
 }
 
 tr:hover {
-  background-color: #ebf8ff;
+  background-color: #e6fffa;
+}
+
+/* Specific column styling for better readability */
+tr td:nth-child(1) {
+  font-weight: 500;
+  color: #1a365d;
+}
+
+tr td:nth-child(3) {
+  color: #2c5282;
+  font-weight: 500;
+}
+
+tr td:nth-child(4) {
+  color: #285e61;
+}
+
+/* Add striped color for readability */
+tr:nth-child(4n+1) {
+  background-color: #f7fafc;
+}
+
+tr:nth-child(4n+2) {
+  background-color: white;
+}
+
+tr:nth-child(4n+3) {
+  background-color: #f0f9ff;
+}
+
+tr:nth-child(4n+4) {
+  background-color: white;
 }
 
 @media (max-width: 768px) {
