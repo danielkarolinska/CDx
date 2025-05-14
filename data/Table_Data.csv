@@ -3,48 +3,48 @@ Breast cancer,FoundationOne CDx,AKT1 E17K,TRUQAP™ (capivasertib) in combinatio
 Breast cancer,FoundationOne CDx,"PIK3CA R88Q, N345K, C420R, E542K, E545A, E545D, E545Q, E545K, E545G, Q546E, Q546K, Q546R, Q546P, M1043V, M1043I, H1047Y, H1047R, H1047L, G1049R;",TRUQAP™ (capivasertib) in combination with FASLODEX® (fulvestrant),AstraZeneca,2023
 Breast cancer,FoundationOne CDx,PTEN alterations,TRUQAP™ (capivasertib) in combination with FASLODEX® (fulvestrant),AstraZeneca,2023
 Breast cancer,FoundationOne CDx,ERBB2 (HER2) amplifications,HERCEPTIN® (trastuzumab),Genentech (Roche),1998
-Breast cancer,FoundationOne CDx,ERBB2 (HER2) amplification,KADCYLA® (ado-trastuzumab emtansine),Genentech (Roche),2013
-Breast cancer,FoundationOne CDx,ERBB2 (HER2) copy number amplification,PERJETA® (pertuzumab),Genentech (Roche),2012
+Breast cancer,FoundationOne CDx,ERBB2 (HER2) amplifications,KADCYLA® (ado-trastuzumab emtansine),Genentech (Roche),2013
+Breast cancer,FoundationOne CDx,ERBB2 (HER2) amplifications,PERJETA® (pertuzumab),Genentech (Roche),2012
 Breast cancer,FoundationOne CDx,"PIK3CA mutations C420R, E542K, E545A, E545D [1635G>T only], E545G, E545K, Q546E, Q546R, H1047L, H1047R, and H1047Y",PIQRAY® (alpelisib) in combination with fulvestrant,Novartis,2019
 Cholangiocarcinoma,FoundationOne CDx,FGFR2 fusions and select rearrangements,PEMAZYRE® (pemigatinib),Incyte Corporation,2020
 Colorectal cancer,FoundationOne CDx,KRAS wild-type (absence of mutations in codons 12 and 13),ERBITUX® (cetuximab),Eli Lilly,2004
 Colorectal cancer,FoundationOne CDx,"KRAS wild-type (absence of mutations in exons 2, 3, and 4) and NRAS wild-type (absence of mutations in exons 2, 3, and 4)",VECTIBIX® (panitumumab),Amgen,2006
 Melanoma,FoundationOne CDx,BRAF V600 mutation-positive,TECENTRIQ® (atezolizumab) in combination with COTELLIC® (cobimetinib) and ZELBORAF® (vemurafenib),Genentech (Roche),2020
-Melanoma,FoundationOne CDx,BRAF V600E mutations,BRAF Inhibitor Approved by FDA*,"Varies (e.g., vemurafenib, dabrafenib)",Various
-Melanoma,FoundationOne CDx,"BRAF V600E, V600K",BRAF/MEK Inhibitor Combinations Approved by FDA*,"Varies (e.g., dabrafenib + trametinib)",Various
+Melanoma,FoundationOne CDx,BRAF V600E,BRAF Inhibitor Approved by FDA*,"Varies (e.g., vemurafenib, dabrafenib)",Various
+Melanoma,FoundationOne CDx,BRAF V600E and V600K,BRAF/MEK Inhibitor Combinations Approved by FDA*,"Varies (e.g., dabrafenib + trametinib)",Various
 Melanoma,FoundationOne CDx,BRAF V600E and V600K,MEKINIST® (trametinib),Novartis,2013
 Non-small cell lung cancer (NSCLC),FoundationOne CDx,ALK rearrangements,ALECENSA® (alectinib),Genentech (Roche),2015
-Non-small cell lung cancer (NSCLC),FoundationOne CDx,ALK fusion,ALUNBRIG® (brigatinib),Takeda,2017
+Non-small cell lung cancer (NSCLC),FoundationOne CDx,ALK rearrangements,ALUNBRIG® (brigatinib),Takeda,2017
 Non-small cell lung cancer (NSCLC),FoundationOne CDx,ALK rearrangements,XALKORI® (crizotinib),Pfizer,2011
-Non-small cell lung cancer (NSCLC),FoundationOne CDx,ALK fusions,ZYKADIA® (ceritinib),Novartis,2014
-Non-small cell lung cancer (NSCLC),FoundationOne CDx,BRAF V600E alterations,BRAFTOVI® (encorafenib) in combination with MEKTOVI® (binimetinib),Pfizer,2018
+Non-small cell lung cancer (NSCLC),FoundationOne CDx,ALK rearrangements,ZYKADIA® (ceritinib),Novartis,2014
+Non-small cell lung cancer (NSCLC),FoundationOne CDx,BRAF V600E,BRAFTOVI® (encorafenib) in combination with MEKTOVI® (binimetinib),Pfizer,2018
 Non-small cell lung cancer (NSCLC),FoundationOne CDx,BRAF V600E,TAFINLAR® (dabrafenib) in combination with MEKINIST® (trametinib),Novartis,2013
 Non-small cell lung cancer (NSCLC),FoundationOne CDx,EGFR exon 19 deletions and EGFR exon 21 L858R alterations,EGFR Tyrosine Kinase Inhibitors (TKI) Approved by FDA*,Multiple,Multiple
 Non-small cell lung cancer (NSCLC),FoundationOne CDx,EGFR exon 20 T790M alterations,TAGRISSO® (osimertinib),AstraZeneca,2015
-Non-small cell lung cancer (NSCLC),FoundationOne CDx,MET single nucleotide variants (SNVs) and indels led to MET exon 14 skipping,TABRECTA® (capmatinib),Novartis,2020
+Non-small cell lung cancer (NSCLC),FoundationOne CDx,MET single nucleotide variants (SNVs) and indels that lead to MET exon 14 skipping,TABRECTA® (capmatinib),Novartis,2020
 Non-small cell lung cancer (NSCLC),FoundationOne CDx,ROS1 fusions,ROZLYTREK® (entrectinib),Genentech (Roche),2019
-Ovarian cancer,FoundationOne CDx,"BRCA1, BRCA2 alteration",LYNPARZA® (olaparib),AstraZeneca,2014
-Prostate cancer,FoundationOne CDx,"BRCA1, BRCA2 mutations",AKEEGA® (niraparib + abiraterone acetate),Janssen (Johnson & Johnson),2023
+Ovarian cancer,FoundationOne CDx,"BRCA1, BRCA2 alterations",LYNPARZA® (olaparib),AstraZeneca,2014
+Prostate cancer,FoundationOne CDx,"BRCA1, BRCA2 alterations",AKEEGA® (niraparib + abiraterone acetate),Janssen (Johnson & Johnson),2023
 Prostate cancer,FoundationOne CDx,"BRCA1, BRCA2 alterations",LYNPARZA® (olaparib) in combination with abiraterone,AstraZeneca,2023
 Prostate cancer,FoundationOne CDx,"Homologous Recombination Repair (HRR) gene (BRCA1, BRCA2, ATM, BARD1, BRIP1, CDK12, CHEK1, CHEK2, FANCL, PALB2, RAD51B, RAD51C, RAD51D and RAD54L) alterations",LYNPARZA® (olaparib),AstraZeneca,2014
 Solid tumors,FoundationOne CDx,MSI-High,KEYTRUDA® (pembrolizumab),Merck,2014
 Solid tumors,FoundationOne CDx,NTRK1/2/3 fusions,ROZLYTREK® (entrectinib),Genentech (Roche),2019
-Solid tumors,FoundationOne CDx,NTRK1/2/3 fusion,VITRAKVI® (larotrectinib),Bayer,2018
+Solid tumors,FoundationOne CDx,NTRK1/2/3 fusions,VITRAKVI® (larotrectinib),Bayer,2018
 Solid tumors,FoundationOne CDx,RET fusions,RETEVMO® (selpercatinib),Eli Lilly,2020
 Solid tumors,FoundationOne CDx,TMB ≥ 10 mutations per megabase,KEYTRUDA® (pembrolizumab),Merck,2014
-Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,ALK gene rearrangements,ALECENSA® (alectinib),Genentech (Roche),2015
-Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,BRAF V600E alteration,BRAFTOVI® (encorafenib) in combination with MEKTOVI® (binimetinib),Pfizer,2018
+Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,ALK rearrangements,ALECENSA® (alectinib),Genentech (Roche),2015
+Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,BRAF V600E,BRAFTOVI® (encorafenib) in combination with MEKTOVI® (binimetinib),Pfizer,2018
 Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,EGFR exon 19 deletions,EGFR tyrosine kinase inhibitors approved by FDA*,Multiple,Multiple
 Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,EGFR exon 21 L858R substitution,EGFR tyrosine kinase inhibitors approved by FDA*,Multiple,Multiple
 Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,EGFR exon 20 insertion,EXKIVITY® (mobocertinib),Takeda,2021
 Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,MET single nucleotide variants (SNVs) and indels that lead to MET exon 14 skipping,TABRECTA® (capmatinib),Novartis,2020
-Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,MET SNVs and indels that lead to MET exon 14 skipping,Tepmetko (tepotinib),Merck KGaA,2021
+Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,MET single nucleotide variants (SNVs) and indels that lead to MET exon 14 skipping,Tepmetko (tepotinib),Merck KGaA,2021
 Non-small cell lung cancer (NSCLC),FoundationOne Liquid CDx,ROS1 fusions,ROZLYTREK® (entrectinib),Genentech (Roche),2019
 Prostate cancer,FoundationOne Liquid CDx,"BRCA1, BRCA2, ATM alterations",LYNPARZA® (olaparib),AstraZeneca,2014
 Prostate cancer,FoundationOne Liquid CDx,"BRCA1, BRCA2 alterations",RUBRACA® (rucaparib),Clovis Oncology,2016
 Breast cancer,FoundationOne Liquid CDx,"PIK3CA mutations C420R, E542K, E545A, E545D [1635G>T only], E545G, E545K, Q546E, Q546R; H1047L, H1047R, and H1047Y",PIQRAY® (alpelisib),Novartis,2019
 Solid Tumors,FoundationOne Liquid CDx,NTRK1/NTRK2/NTRK3 fusions,ROZLYTREK® (entrectinib),Genentech (Roche),2019
-Colorectal Cancer (CRC),FoundationOne Liquid CDx,BRAF V600E mutation,BRAFTOVI® (encorafenib) in combination with cetuximab,Pfizer,2020
+Colorectal Cancer (CRC),FoundationOne Liquid CDx,BRAF V600E,BRAFTOVI® (encorafenib) in combination with cetuximab,Pfizer,2020
 Low-Grade Glioma,FoundationOne Liquid CDx,BRAF V600 mutation-positive and BRAF fusions,OjemdaTM (tovorafenib),Day One Biopharmaceuticals,2024
 Non-small cell lung cancer (NSCLC),Guardant360® CDx,"EGFR exon 19 deletions, L858R, and T790M*",TAGRISSO® (osimertinib),AstraZeneca,2015
 Non-small cell lung cancer (NSCLC),Guardant360® CDx,EGFR exon 20 insertions,RYBREVANT® (amivantamab-vmjw),Janssen (Johnson & Johnson),2021
