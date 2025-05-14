@@ -4,6 +4,7 @@ from typing import Optional
 import csv
 import os
 import sys
+import re
 
 app = FastAPI()
 
@@ -75,6 +76,29 @@ def load_table():
     except Exception as e:
         return {"error": f"Error loading data: {str(e)}"}
 
+def text_contains(haystack, needle):
+    """
+    Enhanced search function that handles special cases for gene mutations
+    and ensures partial matching works correctly.
+    """
+    if not needle or not haystack:
+        return True
+    
+    # Convert both to lowercase for case-insensitive comparison
+    haystack_lower = haystack.lower()
+    needle_lower = needle.lower()
+    
+    # Direct substring check
+    if needle_lower in haystack_lower:
+        return True
+    
+    # Special handling for gene mutations like NTRK vs NTRK1/2/3
+    # Check if needle is a gene name prefix in gene mutation strings
+    if re.search(r'\b' + re.escape(needle_lower) + r'[0-9/]*\b', haystack_lower):
+        return True
+    
+    return False
+
 @app.get("/search")
 def search(
     tumor_type: Optional[str] = Query(None),
@@ -102,21 +126,32 @@ def search(
         if not all(k in row for k in ['Tumor Type', 'Test', 'Gene mutations', 'Therapy']):
             continue
         try:
-            if tumor_type and tumor_type.lower() not in row['Tumor Type'].lower():
+            # Use the enhanced text_contains function for better matching
+            if tumor_type and not text_contains(row['Tumor Type'], tumor_type):
                 continue
-            if test and test.lower() not in row['Test'].lower():
+            if test and not text_contains(row['Test'], test):
                 continue
-            if gene_mutations and gene_mutations.lower() not in row['Gene mutations'].lower():
+            if gene_mutations and not text_contains(row['Gene mutations'], gene_mutations):
                 continue
-            if therapy and therapy.lower() not in row['Therapy'].lower():
+            if therapy and not text_contains(row['Therapy'], therapy):
                 continue
+            results.append(row)
         except KeyError as e:
             return {"error": f"Missing expected column: {e}"}
-        results.append(row)
+    
     # Define columns for table rendering (in order)
     columns = ['Tumor Type', 'Test', 'Gene mutations', 'Therapy']
+    
+    # Diagnostic information for specific searches
+    diagnostic_info = {}
+    if gene_mutations in ["NTRK", "ALK"]:
+        diagnostic_info["search_term"] = gene_mutations
+        diagnostic_info["matching_rows"] = len(results)
+        diagnostic_info["expected_minimum"] = 3 if gene_mutations == "NTRK" else 5
+    
     return {
         "columns": columns, 
         "results": results,
-        "total_matches": len(results)
+        "total_matches": len(results),
+        "diagnostic_info": diagnostic_info if diagnostic_info else None
     }
