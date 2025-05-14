@@ -83,7 +83,7 @@ function App() {
       </section>
       <form className="search-form" onSubmit={handleSubmit}>
         <div className="search-instructions">
-          <p><b>Search Rules:</b> Enter any term in any field. If the term appears anywhere in any field of a row, the whole row will be returned. You can search across multiple fields to find more specific results.</p>
+          <p><b>Search Rules:</b> Enter any term in any field. If the term appears anywhere in the same column, the whole row will be returned. You can search across multiple fields to find more specific results.</p>
         </div>
         <div className="form-row">
           <input

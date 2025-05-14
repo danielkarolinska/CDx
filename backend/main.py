@@ -87,7 +87,7 @@ def search(
 ):
     """
     Search the table by any combination of fields. Case-insensitive, partial match.
-    Rule: If any search term matches any part of any cell, return the row.
+    Rule: If a search term matches in its corresponding column, the whole row will be returned.
     All matching rows are returned without deduplication.
     """
     table = load_table()
@@ -101,7 +101,7 @@ def search(
     # Simple function to check if a field matches the search term
     def matches(field_value, search_term):
         if not search_term:
-            return False  # Empty search terms don't count as matches
+            return True  # Empty search terms match everything in their column
         if not field_value:
             return False
         # Simple case insensitive check
@@ -118,48 +118,23 @@ def search(
             if not all(key in row for key in ['Tumor Type', 'Test', 'Gene mutations', 'Therapy']):
                 continue
                 
-            # Check if ANY search term matches ANY field (not just respective fields)
-            found_match = False
+            # Check each term against its corresponding column
+            tumor_match = matches(row.get('Tumor Type', ''), tumor_type)
+            test_match = matches(row.get('Test', ''), test)
+            gene_match = matches(row.get('Gene mutations', ''), gene_mutations)
+            therapy_match = matches(row.get('Therapy', ''), therapy)
             
-            # For each search term, check if it matches any field in the row
-            if tumor_type:
-                for field_name, field_value in row.items():
-                    if matches(field_value, tumor_type):
-                        found_match = True
-                        break
-                        
-            if test and not found_match:
-                for field_name, field_value in row.items():
-                    if matches(field_value, test):
-                        found_match = True
-                        break
-                        
-            if gene_mutations and not found_match:
-                for field_name, field_value in row.items():
-                    if matches(field_value, gene_mutations):
-                        found_match = True
-                        break
-                        
-            if therapy and not found_match:
-                for field_name, field_value in row.items():
-                    if matches(field_value, therapy):
-                        found_match = True
-                        break
-                        
-            if drug_company and not found_match:
-                for field_name, field_value in row.items():
-                    if matches(field_value, drug_company):
-                        found_match = True
-                        break
-                        
-            if fda_year and not found_match:
-                for field_name, field_value in row.items():
-                    if matches(field_value, fda_year):
-                        found_match = True
-                        break
+            # Check the optional columns if they exist
+            drug_company_match = True
+            if drug_company and 'Drug Company' in row:
+                drug_company_match = matches(row['Drug Company'], drug_company)
+                
+            fda_year_match = True
+            if fda_year and 'FDA Approved Year' in row:
+                fda_year_match = matches(row['FDA Approved Year'], fda_year)
             
-            # If any match found, include this row
-            if found_match:
+            # Row matches if ALL provided search terms match in their respective columns
+            if tumor_match and test_match and gene_match and therapy_match and drug_company_match and fda_year_match:
                 results.append(row)
     
     # Define columns for table rendering (in order) - including new columns
@@ -183,7 +158,7 @@ def search(
         },
         "matched_rows": len(results),
         "total_rows": len(table) if isinstance(table, list) else 0,
-        "search_rule": "Match any search term against any field content"
+        "search_rule": "Match search terms in their corresponding columns"
     }
     
     return {
