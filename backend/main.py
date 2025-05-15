@@ -120,6 +120,8 @@ def search(
     diagnostic_name: Optional[str] = Query(None),
     indication_sample: Optional[str] = Query(None),
     drug_trade_name: Optional[str] = Query(None),
+    drug_generic_name: Optional[str] = Query(None),
+    drug_manufacturer: Optional[str] = Query(None),
     biomarker: Optional[str] = Query(None),
     biomarker_details: Optional[str] = Query(None),
     approval_date: Optional[str] = Query(None),
@@ -147,41 +149,58 @@ def search(
         return search_term.lower() in field_value.lower()
     
     # If no search terms provided, return all rows
-    has_search_terms = any([diagnostic_name, indication_sample, drug_trade_name, biomarker, biomarker_details, approval_date])
+    has_search_terms = any([
+        diagnostic_name, indication_sample, drug_trade_name, 
+        drug_generic_name, drug_manufacturer, biomarker, 
+        biomarker_details, approval_date
+    ])
+    
     if not has_search_terms:
         results = table
     else:
         # Go through each row
         for row in table:
-            # Check if all required columns exist
+            # Define column names from the CSV
             diag_name_col = 'Diagnostic Name (Manufacturer)'
             indication_col = 'Indication - Sample Type'
-            drug_name_col = 'Drug Trade Name (Generic) NDA / BLA'
+            drug_trade_col = 'Drug Trade Name'
+            drug_generic_col = 'Drug Generic Name'
+            drug_manufacturer_col = 'Drug Manufacturer'
             biomarker_col = 'Biomarker(s)'
             biomarker_details_col = 'Biomarker(s) (Details)'
             approval_date_col = 'Approval/Clearance/Grant Date'
             
             # Skip rows missing expected columns
-            if not all(key in row for key in [diag_name_col, indication_col, drug_name_col, biomarker_col, biomarker_details_col, approval_date_col]):
+            if not all(key in row for key in [
+                diag_name_col, indication_col, drug_trade_col, 
+                drug_generic_col, drug_manufacturer_col, biomarker_col, 
+                biomarker_details_col, approval_date_col
+            ]):
                 continue
                 
             # Check each term against its corresponding column
             diag_match = matches(row.get(diag_name_col, ''), diagnostic_name)
             indication_match = matches(row.get(indication_col, ''), indication_sample)
-            drug_match = matches(row.get(drug_name_col, ''), drug_trade_name)
+            drug_trade_match = matches(row.get(drug_trade_col, ''), drug_trade_name)
+            drug_generic_match = matches(row.get(drug_generic_col, ''), drug_generic_name)
+            drug_manufacturer_match = matches(row.get(drug_manufacturer_col, ''), drug_manufacturer)
             biomarker_match = matches(row.get(biomarker_col, ''), biomarker)
             biomarker_details_match = matches(row.get(biomarker_details_col, ''), biomarker_details)
             approval_date_match = matches(row.get(approval_date_col, ''), approval_date)
             
             # Row matches if ALL provided search terms match in their respective columns
-            if diag_match and indication_match and drug_match and biomarker_match and biomarker_details_match and approval_date_match:
+            if (diag_match and indication_match and drug_trade_match and 
+                drug_generic_match and drug_manufacturer_match and biomarker_match and 
+                biomarker_details_match and approval_date_match):
                 results.append(row)
     
-    # Define columns for table rendering (in order)
+    # Define columns for table rendering (in order), excluding the last two columns
     columns = [
         'Diagnostic Name (Manufacturer)',
         'Indication - Sample Type',
-        'Drug Trade Name (Generic) NDA / BLA',
+        'Drug Trade Name',
+        'Drug Generic Name',
+        'Drug Manufacturer',
         'Biomarker(s)',
         'Biomarker(s) (Details)',
         'Approval/Clearance/Grant Date'
@@ -193,6 +212,8 @@ def search(
             "diagnostic_name": diagnostic_name,
             "indication_sample": indication_sample, 
             "drug_trade_name": drug_trade_name,
+            "drug_generic_name": drug_generic_name,
+            "drug_manufacturer": drug_manufacturer,
             "biomarker": biomarker,
             "biomarker_details": biomarker_details,
             "approval_date": approval_date

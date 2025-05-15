@@ -11,6 +11,8 @@ function App() {
     diagnostic_name: '',
     indication_sample: '',
     drug_trade_name: '',
+    drug_generic_name: '',
+    drug_manufacturer: '',
     biomarker: '',
     biomarker_details: '',
     approval_date: ''
@@ -109,8 +111,24 @@ function App() {
           <input
             type="text"
             name="drug_trade_name"
-            placeholder="Drug Trade Name (Generic)"
+            placeholder="Drug Trade Name"
             value={form.drug_trade_name}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="drug_generic_name"
+            placeholder="Drug Generic Name"
+            value={form.drug_generic_name}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-row">
+          <input
+            type="text"
+            name="drug_manufacturer"
+            placeholder="Drug Manufacturer"
+            value={form.drug_manufacturer}
             onChange={handleChange}
           />
           <input
