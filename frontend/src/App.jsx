@@ -36,9 +36,10 @@ function App() {
         .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
         .join('&')
       
-      console.log(`Fetching from: ${API_URL}?${params}`)
+      const apiUrl = `${API_URL}?${params}`;
+      console.log(`Fetching from: ${apiUrl}`)
       
-      const res = await fetch(`${API_URL}?${params}`, {
+      const res = await fetch(apiUrl, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -47,7 +48,9 @@ function App() {
       })
       
       if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`)
+        const errorText = await res.text();
+        console.error('HTTP Error:', res.status, errorText);
+        throw new Error(`HTTP error! Status: ${res.status}. Details: ${errorText}`);
       }
       
       const data = await res.json()

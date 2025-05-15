@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Test</h1>
+    <button id="testBtn">Test API</button>
+    <div id="result">Results will appear here...</div>
+
+    <script>
+        document.getElementById('testBtn').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Loading...';
+            
+            try {
+                // Test root endpoint
+                const rootRes = await fetch('http://localhost:8000/');
+                const rootData = await rootRes.json();
+                
+                // Test search endpoint with empty query
+                const searchRes = await fetch('http://localhost:8000/search');
+                const searchData = await searchRes.json();
+                
+                resultDiv.textContent = 'Root Endpoint:\n' + 
+                    JSON.stringify(rootData, null, 2) + 
+                    '\n\nSearch Endpoint (empty query):\n' + 
+                    JSON.stringify({
+                        total_matches: searchData.total_matches,
+                        column_count: searchData.columns?.length,
+                        search_info: searchData.search_info
+                    }, null, 2);
+            } catch (err) {
+                resultDiv.textContent = 'Error: ' + err.message;
+                console.error(err);
+            }
+        });
+    </script>
+</body>
+</html> 
