@@ -115,12 +115,12 @@ def load_local_table():
 
 @app.get("/search")
 def search(
-    tumor_type: Optional[str] = Query(None),
-    test: Optional[str] = Query(None),
-    gene_mutations: Optional[str] = Query(None),
-    therapy: Optional[str] = Query(None),
-    drug_company: Optional[str] = Query(None),
-    fda_year: Optional[str] = Query(None),
+    diagnostic_name: Optional[str] = Query(None),
+    indication_sample: Optional[str] = Query(None),
+    drug_trade_name: Optional[str] = Query(None),
+    biomarker: Optional[str] = Query(None),
+    biomarker_details: Optional[str] = Query(None),
+    approval_date: Optional[str] = Query(None),
 ):
     """
     Search the table by any combination of fields. Case-insensitive, partial match.
@@ -145,53 +145,55 @@ def search(
         return search_term.lower() in field_value.lower()
     
     # If no search terms provided, return all rows
-    has_search_terms = any([tumor_type, test, gene_mutations, therapy, drug_company, fda_year])
+    has_search_terms = any([diagnostic_name, indication_sample, drug_trade_name, biomarker, biomarker_details, approval_date])
     if not has_search_terms:
         results = table
     else:
         # Go through each row
         for row in table:
+            # Check if all required columns exist
+            diag_name_col = 'Diagnostic Name (Manufacturer)'
+            indication_col = 'Indication - Sample Type'
+            drug_name_col = 'Drug Trade Name (Generic) NDA / BLA'
+            biomarker_col = 'Biomarker(s)'
+            biomarker_details_col = 'Biomarker(s) (Details)'
+            approval_date_col = 'Approval/Clearance/Grant Date'
+            
             # Skip rows missing expected columns
-            if not all(key in row for key in ['Tumor Type', 'Test', 'Gene mutations', 'Therapy']):
+            if not all(key in row for key in [diag_name_col, indication_col, drug_name_col, biomarker_col, biomarker_details_col, approval_date_col]):
                 continue
                 
             # Check each term against its corresponding column
-            tumor_match = matches(row.get('Tumor Type', ''), tumor_type)
-            test_match = matches(row.get('Test', ''), test)
-            gene_match = matches(row.get('Gene mutations', ''), gene_mutations)
-            therapy_match = matches(row.get('Therapy', ''), therapy)
-            
-            # Check the optional columns if they exist
-            drug_company_match = True
-            if drug_company and 'Drug Company' in row:
-                drug_company_match = matches(row['Drug Company'], drug_company)
-                
-            fda_year_match = True
-            if fda_year and 'FDA Approved Year' in row:
-                fda_year_match = matches(row['FDA Approved Year'], fda_year)
+            diag_match = matches(row.get(diag_name_col, ''), diagnostic_name)
+            indication_match = matches(row.get(indication_col, ''), indication_sample)
+            drug_match = matches(row.get(drug_name_col, ''), drug_trade_name)
+            biomarker_match = matches(row.get(biomarker_col, ''), biomarker)
+            biomarker_details_match = matches(row.get(biomarker_details_col, ''), biomarker_details)
+            approval_date_match = matches(row.get(approval_date_col, ''), approval_date)
             
             # Row matches if ALL provided search terms match in their respective columns
-            if tumor_match and test_match and gene_match and therapy_match and drug_company_match and fda_year_match:
+            if diag_match and indication_match and drug_match and biomarker_match and biomarker_details_match and approval_date_match:
                 results.append(row)
     
-    # Define columns for table rendering (in order) - including new columns
-    columns = ['Tumor Type', 'Test', 'Gene mutations', 'Therapy']
-    
-    # Check if the new columns exist in the results
-    if results and 'Drug Company' in results[0]:
-        columns.append('Drug Company')
-    if results and 'FDA Approved Year' in results[0]:
-        columns.append('FDA Approved Year')
+    # Define columns for table rendering (in order)
+    columns = [
+        'Diagnostic Name (Manufacturer)',
+        'Indication - Sample Type',
+        'Drug Trade Name (Generic) NDA / BLA',
+        'Biomarker(s)',
+        'Biomarker(s) (Details)',
+        'Approval/Clearance/Grant Date'
+    ]
     
     # Return results with diagnostic info
     search_info = {
         "search_terms": {
-            "tumor_type": tumor_type,
-            "test": test, 
-            "gene_mutations": gene_mutations,
-            "therapy": therapy,
-            "drug_company": drug_company,
-            "fda_year": fda_year
+            "diagnostic_name": diagnostic_name,
+            "indication_sample": indication_sample, 
+            "drug_trade_name": drug_trade_name,
+            "biomarker": biomarker,
+            "biomarker_details": biomarker_details,
+            "approval_date": approval_date
         },
         "matched_rows": len(results),
         "total_rows": len(table) if isinstance(table, list) else 0,

@@ -8,12 +8,12 @@ const API_URL = process.env.NODE_ENV === 'production'
 
 function App() {
   const [form, setForm] = useState({
-    tumor_type: '',
-    test: '',
-    gene_mutations: '',
-    therapy: '',
-    drug_company: '',
-    fda_year: ''
+    diagnostic_name: '',
+    indication_sample: '',
+    drug_trade_name: '',
+    biomarker: '',
+    biomarker_details: '',
+    approval_date: ''
   })
   const [results, setResults] = useState([])
   const [columns, setColumns] = useState([])
@@ -89,48 +89,48 @@ function App() {
         <div className="form-row">
           <input
             type="text"
-            name="tumor_type"
-            placeholder="Tumor Type"
-            value={form.tumor_type}
+            name="diagnostic_name"
+            placeholder="Diagnostic Name (Manufacturer)"
+            value={form.diagnostic_name}
             onChange={handleChange}
           />
           <input
             type="text"
-            name="test"
-            placeholder="Test"
-            value={form.test}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-row">
-          <input
-            type="text"
-            name="gene_mutations"
-            placeholder="Gene Mutations"
-            value={form.gene_mutations}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="therapy"
-            placeholder="Therapy"
-            value={form.therapy}
+            name="indication_sample"
+            placeholder="Indication - Sample Type"
+            value={form.indication_sample}
             onChange={handleChange}
           />
         </div>
         <div className="form-row">
           <input
             type="text"
-            name="drug_company"
-            placeholder="Drug Company"
-            value={form.drug_company}
+            name="drug_trade_name"
+            placeholder="Drug Trade Name (Generic)"
+            value={form.drug_trade_name}
             onChange={handleChange}
           />
           <input
             type="text"
-            name="fda_year"
-            placeholder="FDA Approval Year"
-            value={form.fda_year}
+            name="biomarker"
+            placeholder="Biomarker(s)"
+            value={form.biomarker}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-row">
+          <input
+            type="text"
+            name="biomarker_details"
+            placeholder="Biomarker(s) Details"
+            value={form.biomarker_details}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="approval_date"
+            placeholder="Approval/Clearance Date"
+            value={form.approval_date}
             onChange={handleChange}
           />
         </div>
