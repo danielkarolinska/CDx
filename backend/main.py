@@ -5,6 +5,8 @@ import csv
 import os
 import sys
 import re
+import requests
+import io
 
 app = FastAPI()
 
@@ -17,13 +19,17 @@ app.add_middleware(
         "http://127.0.0.1:3000",
         "http://127.0.0.1:5173",
         "https://cdx-frontend.onrender.com",
+        "https://therafind-frontend.onrender.com",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
-# Check different possible locations for the data file
+# GitHub raw content URL for the data file
+GITHUB_DATA_URL = "https://raw.githubusercontent.com/danielkarolinska/CDx/main/data/Table_Data.csv"
+
+# Check different possible locations for the data file (fallback)
 possible_data_paths = [
     os.path.join(os.path.dirname(__file__), '../data/Table_Data.csv'),
     os.path.join(os.path.dirname(__file__), 'data/Table_Data.csv'),
@@ -42,8 +48,10 @@ async def root():
     paths_checked = "\n".join(possible_data_paths)
     data_exists = DATA_PATH is not None
     return {
-        "message": "CDx Backend API is running", 
+        "message": "TheraFind Backend API is running", 
         "endpoints": ["/search"],
+        "data_source": "GitHub",
+        "github_url": GITHUB_DATA_URL,
         "data_path_exists": data_exists,
         "data_path": DATA_PATH if data_exists else None,
         "paths_checked": paths_checked,
@@ -51,8 +59,37 @@ async def root():
         "dir_contents": str(os.listdir('.' if os.getcwd() else '/'))
     }
 
-# Helper to load table data
+# Helper to load table data from GitHub
 def load_table():
+    try:
+        # First try to fetch from GitHub
+        response = requests.get(GITHUB_DATA_URL)
+        if response.status_code == 200:
+            # Parse the CSV from the response content
+            csv_content = io.StringIO(response.text)
+            reader = csv.DictReader(csv_content)
+            table = list(reader)
+            if table:
+                # Normalize column names (strip BOM and whitespace)
+                normalized_table = []
+                for row in table:
+                    new_row = {}
+                    for k, v in row.items():
+                        key = k.replace('\ufeff', '').strip()
+                        new_row[key] = v
+                    normalized_table.append(new_row)
+                return normalized_table
+            return table
+        else:
+            # Fallback to local file if GitHub fetch fails
+            return load_local_table()
+    except Exception as e:
+        # Fallback to local file if GitHub fetch fails
+        print(f"Error fetching from GitHub: {str(e)}")
+        return load_local_table()
+
+# Helper to load table data from local file as fallback
+def load_local_table():
     if not DATA_PATH:
         return {"error": f"Data file not found. Checked paths: {possible_data_paths}"}
     

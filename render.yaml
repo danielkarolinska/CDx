@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: cdx-api-backend
+    name: therafind-api-backend
     env: python
     buildCommand: pip install --upgrade pip && pip install -r backend/requirements.txt && mkdir -p backend/data && cp -r data/* backend/data/
     startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT --root-path /
@@ -14,7 +14,7 @@ services:
     headers:
       - path: /*
         name: Access-Control-Allow-Origin
-        value: https://cdx-frontend.onrender.com
+        value: https://therafind-frontend.onrender.com
       - path: /*
         name: X-Frame-Options
         value: DENY
@@ -26,7 +26,7 @@ services:
         value: max-age=31536000; includeSubDomains
 
   - type: static
-    name: cdx-frontend
+    name: therafind-frontend
     buildCommand: cd frontend && npm ci && npm run build
     publishDirectory: frontend/dist
     envVars:
@@ -35,7 +35,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: VITE_API_URL
-        value: https://cdx-api-backend.onrender.com
+        value: https://therafind-api-backend.onrender.com
       - key: CI
         value: true
     headers:
@@ -53,7 +53,7 @@ services:
         value: max-age=31536000; includeSubDomains
       - path: /*
         name: Content-Security-Policy
-        value: "default-src 'self' https://cdx-api-backend.onrender.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval';"
+        value: "default-src 'self' https://therafind-api-backend.onrender.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval';"
     routes:
       - type: rewrite
         source: /*

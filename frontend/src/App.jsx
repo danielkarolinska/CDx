@@ -3,7 +3,7 @@ import './App.css'
 
 // Use localhost instead of 127.0.0.1 for better compatibility
 const API_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://cdx-api-backend.onrender.com/search'
+  ? 'https://therafind-api-backend.onrender.com/search'
   : 'http://localhost:8000/search'
 
 function App() {
@@ -70,7 +70,7 @@ function App() {
   return (
     <div className="container">
       <header>
-        <h1>CDx: Companion Diagnostics & Precision Medicine Search</h1>
+        <h1>Companion Diagnostics & Precision Medicine</h1>
       </header>
       <section className="intro-section">
         <h2>What are Companion Diagnostics and Precision Medicine?</h2>
@@ -83,7 +83,8 @@ function App() {
       </section>
       <form className="search-form" onSubmit={handleSubmit}>
         <div className="search-instructions">
-          <p><b>Search Instructions:</b> You can search within a single field to find matching results, or search across multiple fields to get more specific results.</p>
+          <p>Welcome to TheraFind, your smart companion in precision medicine. Our platform empowers patients and healthcare providers to identify the most effective, personalized therapies using companion diagnostics.</p>
+          <p>Please consult with your doctor for insurance coverage and treatment options.</p>
         </div>
         <div className="form-row">
           <input
