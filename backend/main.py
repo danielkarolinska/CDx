@@ -50,7 +50,7 @@ async def root():
     paths_checked = "\n".join(possible_data_paths)
     data_exists = DATA_PATH is not None
     return {
-        "message": "TheraFind Backend API is running", 
+        "message": "CDx Backend API is running", 
         "endpoints": ["/search"],
         "data_source": "GitHub",
         "github_url": GITHUB_DATA_URL,
