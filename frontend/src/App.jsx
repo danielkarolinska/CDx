@@ -9,13 +9,13 @@ const API_URL = process.env.NODE_ENV === 'production'
 function App() {
   const [form, setForm] = useState({
     diagnostic_name: '',
+    technology_used: '',
     indication_sample: '',
     drug_trade_name: '',
-    drug_generic_name: '',
     drug_manufacturer: '',
     biomarker: '',
     biomarker_details: '',
-    approval_date: ''
+    fda_approval_date: ''
   })
   const [results, setResults] = useState([])
   const [columns, setColumns] = useState([])
@@ -101,25 +101,25 @@ function App() {
           />
           <input
             type="text"
-            name="indication_sample"
-            placeholder="Indication - Sample Type"
-            value={form.indication_sample}
+            name="technology_used"
+            placeholder="Technology Used"
+            value={form.technology_used}
             onChange={handleChange}
           />
         </div>
         <div className="form-row">
           <input
             type="text"
-            name="drug_trade_name"
-            placeholder="Drug Trade Name"
-            value={form.drug_trade_name}
+            name="indication_sample"
+            placeholder="Indication - Sample Type"
+            value={form.indication_sample}
             onChange={handleChange}
           />
           <input
             type="text"
-            name="drug_generic_name"
-            placeholder="Drug Generic Name"
-            value={form.drug_generic_name}
+            name="drug_trade_name"
+            placeholder="Drug Trade Name (Generic)"
+            value={form.drug_trade_name}
             onChange={handleChange}
           />
         </div>
@@ -149,9 +149,9 @@ function App() {
           />
           <input
             type="text"
-            name="approval_date"
-            placeholder="Approval/Clearance Date"
-            value={form.approval_date}
+            name="fda_approval_date"
+            placeholder="FDA CDx Approval Date"
+            value={form.fda_approval_date}
             onChange={handleChange}
           />
         </div>
